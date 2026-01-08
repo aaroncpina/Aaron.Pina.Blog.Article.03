@@ -14,11 +14,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 {
     options.TokenValidationParameters = new TokenValidationParameters
     {
-        ValidateIssuer = false,
-        ValidIssuer = "https://localhost:5001",
-        ValidateAudience = false,
-        ValidAudience = "https://localhost:5001",
-        ValidateLifetime = false,
+        ValidateIssuer = true,
+        ValidIssuer = "https://localhost",
+        ValidateAudience = true,
+        ValidAudience = "https://localhost",
+        ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
         IssuerSigningKey = rsaPublicKey,
         ClockSkew = TimeSpan.FromMinutes(5)
@@ -45,10 +45,10 @@ app.MapGet("/login", () =>
 
     var tokenDescriptor = new SecurityTokenDescriptor
     {
-        Issuer = "https://localhost:5001",
-        Audience = "https://localhost:5001",
+        Issuer = "https://localhost",
+        Audience = "https://localhost",
         Subject = new ClaimsIdentity(claims),
-        Expires = now.AddMinutes(30).DateTime,
+        Expires = now.UtcDateTime.AddMinutes(30),
         SigningCredentials = new SigningCredentials(rsaKey, SecurityAlgorithms.RsaSha256)
     };
 
