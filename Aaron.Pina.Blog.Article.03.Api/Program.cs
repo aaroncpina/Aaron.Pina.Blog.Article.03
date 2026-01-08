@@ -15,13 +15,13 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
     options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuer = false,
-        // ValidIssuer = "https://localhost",
+        ValidIssuer = "https://localhost:5001",
         ValidateAudience = false,
-        // ValidAudience = "https://localhost",
+        ValidAudience = "https://localhost:5001",
         ValidateLifetime = false,
         ValidateIssuerSigningKey = true,
         IssuerSigningKey = rsaPublicKey,
-        // ClockSkew = TimeSpan.FromMinutes(5)
+        ClockSkew = TimeSpan.FromMinutes(5)
     };
 });
 
