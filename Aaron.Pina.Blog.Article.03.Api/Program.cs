@@ -34,21 +34,21 @@ app.UseAuthorization();
 
 app.MapGet("/login", () =>
 {
-    var now = DateTimeOffset.UtcNow;
+    var now = DateTime.UtcNow;
     
     var claims = new[]
     {
         new Claim(JwtRegisteredClaimNames.Sub, Guid.NewGuid().ToString()),
-        new Claim(JwtRegisteredClaimNames.Iat, now.ToUnixTimeSeconds().ToString()),
         new Claim(JwtRegisteredClaimNames.Name, "Aaron Pina")
     };
 
     var tokenDescriptor = new SecurityTokenDescriptor
     {
+        IssuedAt = now,
+        Expires = now.AddMinutes(30),
         Issuer = "https://localhost",
         Audience = "https://localhost",
         Subject = new ClaimsIdentity(claims),
-        Expires = now.UtcDateTime.AddMinutes(30),
         SigningCredentials = new SigningCredentials(rsaKey, SecurityAlgorithms.RsaSha256)
     };
 
